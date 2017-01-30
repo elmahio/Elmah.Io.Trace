@@ -1,27 +1,30 @@
 ﻿using Elmah.Io.Client;
 using System;
 using System.Diagnostics;
+using Elmah.Io.Client.Models;
 
 namespace Elmah.Io.Trace
 {
     public class ElmahIoTraceListener : TraceListener
     {
-        readonly ILogger _logger;
+        readonly IElmahioAPI _client;
+        readonly Guid _logId;
 
-        public ElmahIoTraceListener(ILogger logger)
+        public ElmahIoTraceListener(IElmahioAPI client)
         {
-            _logger = logger;
+            _client = client;
         }
 
-        public ElmahIoTraceListener(Guid logId)
+        public ElmahIoTraceListener(string apiKey, Guid logId)
         {
-            _logger = new Logger(logId);
+            _client = ElmahioAPI.Create(apiKey);
+            _logId = logId;
         }
 
         public override void Write(string message)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
-            _logger.Information(message);
+            _client.Messages.Information(_logId, message);
         }
 
         public override void WriteLine(string message)
@@ -31,12 +34,15 @@ namespace Elmah.Io.Trace
 
         public override void Fail(string message)
         {
-            _logger.Log(new Message(message) { Severity = Severity.Error });
+            if (string.IsNullOrWhiteSpace(message)) return;
+            _client.Messages.Error(_logId, message);
         }
 
         public override void Fail(string message, string detailMessage)
         {
-            _logger.Log(new Message(message) {Detail = detailMessage, Severity = Severity.Error});
+            if (string.IsNullOrWhiteSpace(message)) return;
+            _client.Messages.CreateAndNotify(_logId,
+                new CreateMessage {Title = message, Detail = detailMessage, Severity = Severity.Error.ToString()});
         }
 
         public override void TraceData(TraceEventCache eventCache, string source, TraceEventType eventType, int id, object data)
@@ -72,7 +78,9 @@ namespace Elmah.Io.Trace
 
         private void Trace(string message, Severity severity, string source)
         {
-            _logger.Log(new Message(message) { Severity = severity, Source = source });
+            if (string.IsNullOrWhiteSpace(message)) return;
+            _client.Messages.CreateAndNotify(_logId,
+                new CreateMessage { Title = message, Source = source, Severity = severity.ToString() });
         }
 
         private Severity TraceEventTypeToSeverity(TraceEventType eventType)

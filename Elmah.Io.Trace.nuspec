@@ -5,7 +5,7 @@
     <authors>elmah.io</authors>
     <owners />
     <dependencies>
-      <dependency id="elmah.io.client" version="2.0.29" />
+      <dependency id="Elmah.Io.Client" version="3.0.41-pre" />
     </dependencies>
     <id>Elmah.Io.Trace</id>
     <title>Elmah.Io.Trace</title>
@@ -16,6 +16,6 @@
 	<tags>Error Exception Reporting Management Logging ELMAH Diagnostics Tracing</tags>
   </metadata>
   <files>
-    <file src="bin\$Configuration$\Elmah.Io.Trace.dll" target="lib\net45\Elmah.Io.Trace.dll" />
+    <file src="Elmah.Io.Trace\bin\$Configuration$\Elmah.Io.Trace.dll" target="lib\net45\Elmah.Io.Trace.dll" />
   </files>
 </package>
