@@ -14,10 +14,10 @@ PS> Install-Package Elmah.Io.Trace
 Add the elmah.io TraceListener to `Trace`:
 
 ```csharp
-System.Diagnostics.Trace.Listeners.Add(new ElmahIoTraceListener(new Guid("LOG_ID")));
+System.Diagnostics.Trace.Listeners.Add(new ElmahIoTraceListener("API_KEY", new Guid("LOG_ID")));
 ```
 
-(replace `LOG_ID` with your log id)
+(replace `API_KEY` with your API key and `LOG_ID` with your log id)
 
 ## Usage
 Log messages to elmah.io, just as with every other trace listener:
