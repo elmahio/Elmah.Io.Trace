@@ -5,7 +5,7 @@
     <authors>elmah.io</authors>
     <owners />
     <dependencies>
-      <dependency id="Elmah.Io.Client" version="[3.0.46,4)" />
+      <dependency id="Elmah.Io.Client" version="[3.2.54,4)" />
     </dependencies>
     <id>Elmah.Io.Trace</id>
     <title>Elmah.Io.Trace</title>
