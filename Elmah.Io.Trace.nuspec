@@ -9,6 +9,7 @@
     </dependencies>
     <id>Elmah.Io.Trace</id>
     <title>Elmah.Io.Trace</title>
+    <license type="expression">Apache-2.0</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Log to elmah.io from System.Diagnostics.Trace and friends.</description>
     <projectUrl>https://elmah.io/</projectUrl>
